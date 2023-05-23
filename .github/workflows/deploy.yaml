@@ -10,10 +10,13 @@ jobs:
       - name: Get code
         uses: actions/checkout@v3
       - name: Load & cache dependencies
+        id: cache-deps
         uses: ./.github/actions/cached-deps
               # if in standalone repo, it would be e.g. plivajucizamorac/my-action
         with:
           caching: 'false'  # use custom input if for example we dont want caching
+      - name: Output information
+        run: echo "Cache used? ${{ steps.cache-deps.outputs.used-cache }}"
       - name: Lint code
         run: npm run lint
   test:
